@@ -5,11 +5,6 @@ struct pharmacy{
      float pr;
     int code,qu;
 };
-struct oneProduct{
-char na[20];
-float pri;
-int cd,Q;
-};
 void menu(){
  printf("1=> ADD PRODUCTS\n");
  printf("2=> ADD 1 PRODUCT\n");
