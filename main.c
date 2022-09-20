@@ -84,11 +84,18 @@ scanf("%d",&bb);
 printf("how much do you want:\n");
 scanf("%d",&hh);
 pharm[bb-1].qu -= hh;
-
+}
+void warning(){
+for (i=0;i<x;i++){
+    if (pharm[i].qu<=3){
+        printf("\t-!-!-!-!-!-!-!\tWARNING!! THE QUANTITY OF %s IS LOW THAN 3\t-!-!-!-!-!-!-!-!\n" , pharm[i].name);
+    }
+}
 }
 int main()
 {
  printf("\t\t\t=>=>=>=>=>=>=> WELCOM TO PHARMACY MANAGEMENT PROGRAM! <=<=<=<=<=<=<=\n\n");
+ warning();
  BEGINING:
  printf("=>=> THE MENU! <=<=\n");
  menu();
@@ -112,7 +119,17 @@ int main()
         printf("\tA NEW PRODUCT WAS ADD BACK TO THE MENU!!\n\n");
         }
         x+=n;
- goto BEGINING;
+         warning();
+        printf("1=> BACK TO THE MENU!\n");
+        printf("ANY NUMBER=> EXIT!\n");
+        scanf("%d" , &o);
+        if (o==1){
+                goto BEGINING;
+        }
+        else {
+            printf("\n");
+        }
+
  break;
  case 2 :
         printf("DELETE A PRODUCT\n");
@@ -126,8 +143,6 @@ int main()
         else {
             printf("\n");
         }
-
-
 
  break;
  case 3 :
@@ -168,9 +183,10 @@ int main()
 
  break;
  case 4 :
-         printf("SALL A PRODUCT\n");
+         printf("SALL A PRODUCT\n\n");
          sall();
          printf("DONE\n");
+         warning();
         printf("1=> BACK TO THE MENU!\n");
         printf("ANY NUMBER=> EXIT!\n");
         scanf("%d" , &o);
