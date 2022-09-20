@@ -1,28 +1,52 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct pharmacy{
+int n,i,hh,bb,PTTC;
+int z,low,high,mid;
+int j,step;
+int o,q;
+
+typedef struct {
     char name[20];
-     float pr;
+    double pr;
     int code,qu;
-};
+}pharmacy;
+
+pharmacy pharm[200];
+static int x = 0;
+
+void deletpr(){
+     int e,t;
+     printf("enter the code of product to delete\n");
+     scanf("%d" ,&e);
+     for (i=0;i<x;i++){
+        if (pharm[i].code==e){
+            for (t=i;t<(x-1);t++);{
+                pharm[t]=pharm[t+1];
+            }
+            x--;
+        }
+
+     }
+}
+////////////////////////////////////
+
 void menu(){
  printf("1=> ADD PRODUCTS\n");
- printf("2=> ADD 1 PRODUCT\n");
- printf("3=> MODIFY\n");
- printf("4=> SEARCH FOR A PRODUCT\n");
- printf("5=> DELETE A PRODUCT\n");
- printf("6=> SALL A PRODUCT\n");
- printf("7=> VIEW PRODUCT LIST\n");
- printf("8=> SALES LIST\n");
+ printf("2=> DELETE A PRODUCT\n");
+ printf("3=> SEARCH FOR A PRODUCT\n");
+ printf("4=> SALL A PRODUCT\n");
+ printf("5=> SALES LIST\n");
+ printf("6=> THE PRODUCT LIST\n");
  printf("ANY NUMBER=> EXITE\n\n");
 }
-void sortbynum(struct pharmacy pharm[], int n)
+/////////////////////////////////////////////////
+void sortbynum( pharmacy pharm[], int n)
 {
     int l, b;
-    struct pharmacy s;
-    for (l = 0; l < n - 1; l++)
+     pharmacy s;
+    for (l=0;l<n-1;l++)
     {
-        for (b = 0; b < (n - 1 - l); b++)
+        for (b =0;b<(n-1-l);b++)
         {
             if (pharm[b].pr < pharm[b + 1].pr)
             {
@@ -33,109 +57,175 @@ void sortbynum(struct pharmacy pharm[], int n)
         }
     }
 }
-void sortbyalpha(struct pharmacy pharm[], int n)
+//////////////////////////////////////////
+void sortbyalpha( pharmacy pharm[], int n)
 {
     int v, k;
-    struct pharmacy h;
-    for (v = 0; v < n - 1; v++)
+     pharmacy h;
+    for (v=0;v<n-1; v++)
     {
-        for (k = 0; k < (n - 1 - v); k++)
+        for (k=0;k<(n-1-v);k++)
         {
             if (strcasecmp(pharm[k].name, pharm[k + 1].name) > 0)
             {
-                h = pharm[k];
-                pharm[k] = pharm[k + 1];
-                pharm[k + 1] = h;
+                h= pharm[k];
+                pharm[k]=pharm[k + 1];
+                pharm[k+1]=h;
             }
         }
     }
 }
 
+///////////////////////////////////////////
+void sall(){
+printf("enter the number of the product:\n");
+scanf("%d",&bb);
+printf("how much do you want:\n");
+scanf("%d",&hh);
+pharm[bb-1].qu -= hh;
+
+}
 int main()
 {
-    int j,step;
-    int n,i,o,q;
-    float TTC;
  printf("\t\t\t=>=>=>=>=>=>=> WELCOM TO PHARMACY MANAGEMENT PROGRAM! <=<=<=<=<=<=<=\n\n");
-  BEGINING:
+ BEGINING:
  printf("=>=> THE MENU! <=<=\n");
  menu();
  printf("enter your choice\n");
  scanf("%d" , &j);
  switch (j){
  case 1 :
+     printf("ADD A PRODUCT\n");
 
     printf("how many product you want to add\n");
     scanf("%d" , &n);
-    struct pharmacy *pharm=malloc(n*sizeof(int));
-    for(i=0;i<n;i++){
+    for(i=x;i<x+n;i++){
         printf("enter the name of the product %d\n" , i+1);
-        scanf("%s" , &pharm[i].name);
+        scanf("%s" , pharm[i].name);
         printf("enter the price of the product(DH)\n");
-        scanf("%f", &pharm[i].pr);
+        scanf("%lf", &pharm[i].pr);
         printf("enter the quantity of the product\n");
         scanf("%d" , &pharm[i].qu);
         printf("enter the code of the product\n");
         scanf("%d", &pharm[i].code);
+        printf("\tA NEW PRODUCT WAS ADD BACK TO THE MENU!!\n\n");
         }
-printf("\tA NEW PRODUCT WAS ADD BACK TO THE MENU!!\n\n");
-goto BEGINING;
+        x+=n;
+ goto BEGINING;
  break;
- case 2 : printf("NOT YET");
+ case 2 :
+        printf("DELETE A PRODUCT\n");
+        deletpr();
+        printf("1=> BACK TO THE MENU!\n");
+        printf("ANY NUMBER=> EXIT!\n");
+        scanf("%d" , &o);
+        if (o==1){
+                goto BEGINING;
+        }
+        else {
+            printf("\n");
+        }
+
+
+
  break;
- case 3 : printf("NOT YET\n");
+ case 3 :
+          SEARCH:
+            printf("SEARCH FOR A PRODUCT\n");
+            printf("enter the product code to find:\n");
+            scanf("%d" , &z);
+            low=0;
+            high=n-1;
+            mid=(low+high)/2;
+            while (low<=high){
+                if(pharm[mid].code<z)
+                    low=mid+1;
+                else if (pharm[mid].code==z)
+                {
+            printf("product number %d\n" , mid+1);
+            printf("product name: %s\n" , pharm[mid].name);
+            printf("product price: %lf + (15%TTC) = %lf\n" ,pharm[mid].pr,pharm[mid].pr+pharm[mid].pr*0.15);
+            printf("product quantity: %d\n" , pharm[mid].qu);
+            break;
+                }
+                else
+                    high=mid-1;
+                mid=(low+high)/2;
+            }
+            if (low>high){
+            printf("this code %d is not exist in the list/n" , z);
+            }
+        printf("1=> BACK TO THE MENU!\n");
+        printf("ANY NUMBER=> EXIT!\n");
+        scanf("%d" , &o);
+        if (o==1){
+                goto BEGINING;
+        }
+        else {
+            printf("\n");
+        }
+
  break;
- case 4 : printf("NOT YET\n");
+ case 4 :
+         printf("SALL A PRODUCT\n");
+         sall();
+         printf("DONE\n");
+        printf("1=> BACK TO THE MENU!\n");
+        printf("ANY NUMBER=> EXIT!\n");
+        scanf("%d" , &o);
+        if (o==1){
+                goto BEGINING;
+        } else {
+            printf("\n");
+        }
+
  break;
- case 5 : printf("NOT YET\n");
+ case 5 :
+   printf("not yet");
+
+
  break;
- case 6 : printf("NOT YET \n");
- break;
- case 7 :
+ case 6 :
         printf("\t\t<=THE PRODUCT LISTE=>\n");
-        TRYA:
         printf("YOU WANT A LIST SORTED BY\n");
         printf("1=>BY NAME A->Z\n");
         printf("2=>BY PRICE BIGGER->SMALLER\n");
         scanf("%d" , &q);
         if (q==1){
-            for (i=0;i<n;i++){
+            for (i=0;i<x;i++){
             sortbyalpha(pharm , n);
-            TTC=pharm[i].pr+(pharm[i].pr*15/100);
             printf("product number %d\n" , i+1);
             printf("product name: %s\n" , pharm[i].name);
-            printf("product price: %.2f + (15%TTC) = %.2f\n" , pharm[i].pr , TTC);
+            printf("product price: %lf + (15%TTC) = %lf\n" , pharm[i].pr , pharm[i].pr+pharm[i].pr*0.15);
             printf("product quantity: %d\n" , pharm[i].qu);
             printf("product code: %d\n" , pharm[i].code);
             printf("--------------------------------------------------------------\n");
-        }
-        }  else if (q==2){
-            for (i=0;i<n;i++){
-          sortbynum(pharm , n);
-          TTC=pharm[i].pr+(pharm[i].pr*15/100);
+            }
+            }
+              else if (q==2){
+            for (i=0;i<x;i++){
+            sortbynum(pharm , n);
             printf("product number %d\n" , i+1);
             printf("product name: %s\n" , pharm[i].name);
-            printf("product price: %.2f + (15%TTC) = %.2f\n" , pharm[i].pr , TTC);
+            printf("product price: %lf + (15%TTC) = %lf\n" , pharm[i].pr ,pharm[i].pr+pharm[i].pr*0.15);
             printf("product quantity: %d\n" , pharm[i].qu);
             printf("product code: %d\n" , pharm[i].code);
             printf("--------------------------------------------------------------\n");
-        } }
-          else {
+            } }
+            else {
             printf("this number does not exist\n");
-            goto TRYA;
-        }
-
+            }
 
         printf("1=> BACK TO THE MENU!\n");
         printf("ANY NUMBER=> EXIT!\n");
         scanf("%d" , &o);
         if (o==1){
-            goto BEGINING;
+                goto BEGINING;
         } else {
             printf("\n");
         }
- case 8 : printf("NOT YET\n");
  break;
+
  default: printf("EXIT!\n");
 
  }
