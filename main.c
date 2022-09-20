@@ -3,7 +3,7 @@
 int n,i,hh,bb,PTTC;
 int z,low,high,mid;
 int j,step;
-int o,q;
+int o,q,df,gc;
 
 typedef struct {
     char name[20];
@@ -37,6 +37,7 @@ void menu(){
  printf("4=> SALL A PRODUCT\n");
  printf("5=> SALES LIST\n");
  printf("6=> THE PRODUCT LIST\n");
+ printf("7=> ADD QUANTITY\n");
  printf("ANY NUMBER=> EXITE\n\n");
 }
 /////////////////////////////////////////////////
@@ -182,6 +183,7 @@ int main()
  break;
  case 5 :
    printf("not yet");
+   printf("%d" , pharm[bb-1]);
 
 
  break;
@@ -225,6 +227,21 @@ int main()
             printf("\n");
         }
  break;
+ case 7 :
+
+    printf("enter the number of the product\n");
+    scanf("%d",&df);
+    printf("HOW MUCH DO YOU WANT TO ADD\n");
+    scanf("%d" , &gc);
+    pharm[df-1].qu +=gc;
+    printf("1=> BACK TO THE MENU!\n");
+        printf("ANY NUMBER=> EXIT!\n");
+        scanf("%d" , &o);
+        if (o==1){
+                goto BEGINING;
+        } else {
+            printf("\n");
+        }
 
  default: printf("EXIT!\n");
 
